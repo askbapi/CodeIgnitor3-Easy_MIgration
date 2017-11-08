@@ -25,6 +25,8 @@ class Easy_table
         $this->currentField = '';
     }
 
+    abstract public function fields();
+
     /**
      * @param string $fieldName
      * @param int $size
