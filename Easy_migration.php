@@ -33,8 +33,14 @@ class Easy_migration
         }
     }
 
-    private function runFor($className='', $version=0){
 
+    /**
+     * For single migration
+     * @param string $className
+     * @param int $version
+     * @throws Exception
+     */
+    private function runFor($className='', $version=0){
         if($version > 0){
             // Get the respective JSON file with version number
             $file = self::BASEPATH.'json/'.str_pad($version, 3, "0", STR_PAD_LEFT).'_'.$className.'.json';
@@ -44,47 +50,50 @@ class Easy_migration
             }
 
             // Get Field Array from JSON file
-            $fields = json_decode(file_get_contents($file));
+            $jsonData = json_decode(file_get_contents($file));
 
-            // Get class name as Table name & Create Table
-            $this->dbforge->add_field($fields);
+            // Collect fields in array format
+            $fields = $jsonData['fields'];
 
-            $tableAttributes = [
-                'ENGINE' => $object->storageEngine,
-                'CHARACTER SET' => $object->charset,
-                'COLLATE' => $object->collation,
-            ];
-            $this->dbforge->create_table($this->tableName, true, $tableAttributes);
+            // Collect table attributes
+            $tableAttributes = $jsonData['tableAttributes'];
+
+            # Create JSON file under migrate directory with incremental value
+            $this->createJsonFile(
+                $fields,
+                ucfirst($className),
+                $tableAttributes
+            );
+
+            # Get class name as Table name & Create Table
+            $this->migrateTable($className, $tableAttributes, $fields);
+
         }else{
             // Get data from migration class
-            $file = self::BASEPATH.$className.'.php';
+            include_once self::BASEPATH.$className.'.php';
+
             $objectClassName = ucfirst($className);
             $object = new $objectClassName;
 
             // Execute the fields method
             $object->fields();
 
-            // Collect Array
+            // Collect fields in array format
             $fields = $object->getFields();
 
-            // Get Table Attributes
-            $tableAttributes = [
-                'ENGINE' => $object->storageEngine,
-                'CHARACTER SET' => $object->charset,
-                'COLLATE' => $object->collation,
-            ];
+            // Collect table attributes
+            $tableAttributes = $this->getTableAttributes($object);
 
             # Create JSON file under migrate directory with incremental value
-            $this->createJsonFile($fields, $objectClassName);
+            $this->createJsonFile(
+                $fields,
+                $objectClassName,
+                $tableAttributes
+            );
 
             # Get class name as Table name & Create Table
-            $this->dbforge->add_field($fields);
-
-
-            $this->dbforge->create_table($this->tableName, true, $tableAttributes);
+            $this->migrateTable($className, $tableAttributes, $fields);
         }
-
-
     }
 
     /**
@@ -96,6 +105,7 @@ class Easy_migration
         foreach ($classFiles as $className){
             // Load Class
             include_once self::BASEPATH.$className.'.php';
+
             $objectClassName = ucfirst($className);
             $object = new $objectClassName;
 
@@ -116,14 +126,25 @@ class Easy_migration
                 );
 
             # Get class name as Table name & Create Table
-            $tableName = strtolower($className);
-            $this->dbforge->drop_table($tableName,TRUE);
-
-            $this->dbforge->add_field($fields);
-            $this->dbforge->create_table($this->tableName, true, $tableAttributes);
+            $this->migrateTable($className, $tableAttributes, $fields);
         }
     }
 
+
+    /**
+     * Actual method that create or update table
+     * @param string $tableName
+     * @param string $tableAttributes
+     * @param $fields
+     */
+    private function migrateTable($tableName='', $tableAttributes='', $fields)
+    {
+        $this->dbforge->drop_table($tableName,TRUE);
+        // @TODO - make it more versatile to handle add, delete column
+
+        $this->dbforge->add_field($fields);
+        $this->dbforge->create_table(strtolower($tableName), true, $tableAttributes);
+    }
 
     /**
      * Save fields into JSON file with incremented version number
