@@ -42,4 +42,39 @@ class Easy_migration
 
     }
 
+
+    /**
+     * Save fields into JSON file with incremented version number
+     * @param array $fields
+     * @param string $className
+     */
+    public function createJsonFile(array $fields, $className='')
+    {
+        // Search for last File
+        $jsonFiles = array_diff(
+            scandir(self::BASEPATH.'json', SCANDIR_SORT_ASCENDING),
+            ['..', '.']
+        );
+
+        $latestVersion = 0;
+        foreach ($jsonFiles as $file){
+            if (strpos($file, $className) !== false) {
+                //File found, get latest version
+                $fileNameParts = explode('_', $file);
+                $currentVersion = (int) $fileNameParts[0];
+
+                if($currentVersion > $latestVersion){
+                    $latestVersion = $currentVersion;
+                }
+            }
+        }
+
+        // New Version
+        $newVersion = $latestVersion + 1;
+        $newFile = self::BASEPATH.'json/'.str_pad($newVersion, 3, "0", STR_PAD_LEFT).'_'.strtolower($className).'.json';
+
+        $jsonData = json_encode($fields);
+
+        file_put_contents($newFile, $jsonData);
+    }
 }
