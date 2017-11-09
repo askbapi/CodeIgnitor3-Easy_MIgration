@@ -11,9 +11,11 @@ class Easy_migration
 {
     const BASEPATH =  'migrations/';
 
+    private $ciObject;
+
     public function __construct()
     {
-
+        $this->ciObject =& get_instance();
     }
 
 
@@ -92,28 +94,32 @@ class Easy_migration
         // Load all files and class from Migration directory
         $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.'));
         foreach ($classFiles as $className){
-            # Load Class
+            // Load Class
             include_once self::BASEPATH.$className.'.php';
             $objectClassName = ucfirst($className);
             $object = new $objectClassName;
 
-            # Execute the fields method
+            // Execute the fields method
             $object->fields();
 
-            # Collect Array
+            // Collect fields in array format
             $fields = $object->getFields();
+
+            // Collect table attributes
+            $tableAttributes = $this->getTableAttributes($object);
 
             # Create JSON file under migrate directory with incremental value
             $this->createJsonFile(
                 $fields,
                 $objectClassName,
-                $this->getTableAttributes($object)
+                $tableAttributes
                 );
 
             # Get class name as Table name & Create Table
+            $tableName = strtolower($className);
+            $this->dbforge->drop_table($tableName,TRUE);
+
             $this->dbforge->add_field($fields);
-
-
             $this->dbforge->create_table($this->tableName, true, $tableAttributes);
         }
     }
