@@ -231,7 +231,7 @@ class Easy_table
      * @param string $storageEngine
      * @return $this
      */
-    protected function setStorageEngine($storageEngine)
+    public function setStorageEngine($storageEngine)
     {
         $this->storageEngine = $storageEngine;
         return $this;
@@ -241,7 +241,7 @@ class Easy_table
      * @param string $charset
      * @return $this
      */
-    protected function setCharset($charset)
+    public function setCharset($charset)
     {
         $this->charset = $charset;
         return $this;
@@ -251,7 +251,7 @@ class Easy_table
      * @param string $collation
      * @return $this
      */
-    protected function setCollation($collation)
+    public function setCollation($collation)
     {
         $this->collation = $collation;
         return $this;
@@ -260,7 +260,7 @@ class Easy_table
     /**
      * @return string
      */
-    protected function getStorageEngine()
+    public function getStorageEngine()
     {
         return $this->storageEngine;
     }
@@ -268,7 +268,7 @@ class Easy_table
     /**
      * @return string
      */
-    protected function getCharset()
+    public function getCharset()
     {
         return $this->charset;
     }
@@ -276,7 +276,7 @@ class Easy_table
     /**
      * @return string
      */
-    protected function getCollation()
+    public function getCollation()
     {
         return $this->collation;
     }
@@ -288,7 +288,4 @@ class Easy_table
     {
         return $this->fields;
     }
-
-
-
 }
