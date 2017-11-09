@@ -9,6 +9,8 @@
 
 class Easy_migration
 {
+    const BASEPATH =  'migrations/';
+
     public function __construct()
     {
 
@@ -18,10 +20,10 @@ class Easy_migration
     public function migrate($version=0, $tableName='')
     {
         // Load all files and class from Migration directory
-        $classFiles = array_diff(scandir('migrations', 1), array('..', '.'));
+        $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.'));
         foreach ($classFiles as $className){
             # Load Class
-            include_once APPPATH.'migrations/'.$className.'.php';
+            include_once self::BASEPATH.$className.'.php';
             $objjectClassName = ucfirst($className);
             $object = new $objjectClassName;
 
@@ -40,6 +42,4 @@ class Easy_migration
 
     }
 
-
 }
-
