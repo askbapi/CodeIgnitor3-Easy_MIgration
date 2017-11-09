@@ -100,7 +100,7 @@ class Easy_migration
      */
     private function runForLatest(){
         // Load all files and class from Migration directory
-        $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.'));
+        $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.', 'json'));
         foreach ($classFiles as $className){
             // Load Class
             require(self::BASEPATH.$className);
