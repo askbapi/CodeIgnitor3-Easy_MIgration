@@ -125,7 +125,7 @@ class Easy_migration
             );
 
             # Get class name as Table name & Create Table
-            $this->migrateTable($className, $tableAttributes, $fields);
+            $this->migrateTable($objectClassName, $tableAttributes, $fields);
         }
     }
 
@@ -138,11 +138,11 @@ class Easy_migration
      */
     private function migrateTable($tableName='', $tableAttributes='', $fields)
     {
-        $this->dbforge->drop_table($tableName,TRUE);
+        $this->ciObject->dbforge->drop_table($tableName,TRUE);
         // @TODO - make it more versatile to handle add, delete column
 
-        $this->dbforge->add_field($fields);
-        $this->dbforge->create_table(strtolower($tableName), true, $tableAttributes);
+        $this->ciObject->dbforge->add_field($fields);
+        $this->ciObject->dbforge->create_table(strtolower($tableName), true, $tableAttributes);
     }
 
     /**
