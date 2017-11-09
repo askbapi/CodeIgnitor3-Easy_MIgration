@@ -59,6 +59,201 @@ class Migrate extends CI_Controller
 ```
 + To run the migration just, call the migration from browser (http://host.com/migrate)
 
+## Available methods Easy_migration.php
+### migrate
+Execute the migration. Creates table and json files.
+
+***Parameters*** 
++ string $tableName - run migration only for specified table
++ int $version  - 0 equal to latest version
+
+***Return*** 
++ Doesn't return anything
+
+For overall migration
+```php
+$this->easy_migration->migrate();
+```
+
+For specific migration
+```php
+$this->easy_migration->migrate('persion', 2);
+```
+
+## Available methods Easy_table.php
+
+### primary
+Make the field primary. It is after field defination.
+***Parameters*** 
++ No parameters need
+
+***Return*** 
++ Doesn't return anything
+
+```php
+increments('id')->primary()
+```
+
+### index
+Behave same as primary method. But only do index on the field.
+
+***Parameters*** 
++ No parameters need
+
+***Return*** 
++ Doesn't return anything
+
+### unique
+Behave same as primary method. But only do unique on the field.
+
+***Parameters*** 
++ No parameters need
+
+***Return*** 
++ Doesn't return anything
+
+### null
+Allow the field to have null value
+
+***Parameters*** 
++ No parameters need
+
+***Return*** 
++ Doesn't return anything
+
+### increments
+It is a field that is unsigned interger having constraint of 10. It is generally used for primary key with AUTO_INCREMENT.
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ int $size - constraint
+
+***Return*** 
++ Doesn't return anything
+
+### integer
+Make field integer
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ int $size - constraint
++ string $default - default value for the field. By default set to **0**
++ bool $unsigned - make the field signed (false) or unsigned (true). By default set to **true**
+
+***Return*** 
++ Doesn't return anything
+
+### decimal
+Make field decimal
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ int $size - whole-number part
++ int $scale - fractional part
++ string $default - default value for the field. By default set to **0**
++ bool $unsigned - make the field signed (false) or unsigned (true). By default set to **true**
+
+***Return*** 
++ Doesn't return anything
+
+### float
+Make field float
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ int $size - whole-number part
++ int $scale - fractional part
++ string $default - default value for the field. By default set to **0**
++ bool $unsigned - make the field signed (false) or unsigned (true). By default set to **true**
+
+***Return*** 
++ Doesn't return anything
+
+### boolean
+Integet field act as boolean. 0 is equal to false and 1 is equal to true.
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ string $default - default value for the field. By default set to **false**
+
+***Return*** 
++ Doesn't return anything
+
+### char
+Make field varchar
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ int $size - constraint
++ string $default - default value for the field. 
+
+***Return*** 
++ Doesn't return anything
+
+### text
+Make field text
+
+***Parameters*** 
++ string $fieldName - Name of the field
+
+***Return*** 
++ Doesn't return anything
+
+### date
+Make field date
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ string $default - default value for the field. By default set to **0000-00-00**
+
+***Return*** 
++ Doesn't return anything
+
+### dateTime
+Make field datetime
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ string $default - default value for the field. By default set to **0000-00-00**
+
+***Return*** 
++ Doesn't return anything
+
+### setTableName
+Take a table name
+
+***Parameters*** 
++ string $tableName
+
+***Return*** 
++ Doesn't return anything
+
+### setStorageEngine
+Define MYSQL engine type
+
+***Parameters*** 
++ string $storageEngine - Define MYSQL engine type. By default set to **InnoDB**
+
+***Return*** 
++ Doesn't return anything
+
+### setCharset
+Set charset for the table
+
+***Parameters*** 
++ string $charset - By default set to **uft8**
+
+***Return*** 
++ Doesn't return anything
+
+### setCollation 
+Set collation for the table
+
+***Parameters*** 
++ string $collation - By default set to **utf8_unicode_ci**
+
+***Return*** 
++ Doesn't return anything
 
 ___
 Enjoy using my Easy_migration and please report any issues you find or try some pull requests. 
