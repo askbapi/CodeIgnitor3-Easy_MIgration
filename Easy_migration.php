@@ -9,7 +9,7 @@
 
 class Easy_migration
 {
-    const BASEPATH =  'migrations/';
+    const BASEPATH =  APPPATH.'migrations/';
 
     private $ciObject;
 
@@ -29,10 +29,9 @@ class Easy_migration
         if((empty($tableName)) && ($version <= 0)){
             $this->runForLatest();
         }else{
-            $this->runfo();
+            $this->runFor();
         }
     }
-
 
     /**
      * For single migration
@@ -104,9 +103,9 @@ class Easy_migration
         $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.'));
         foreach ($classFiles as $className){
             // Load Class
-            include_once self::BASEPATH.$className.'.php';
+            require(self::BASEPATH.$className);
 
-            $objectClassName = ucfirst($className);
+            $objectClassName = str_ireplace(".php", "", $className);
             $object = new $objectClassName;
 
             // Execute the fields method
@@ -123,7 +122,7 @@ class Easy_migration
                 $fields,
                 $objectClassName,
                 $tableAttributes
-                );
+            );
 
             # Get class name as Table name & Create Table
             $this->migrateTable($className, $tableAttributes, $fields);
@@ -196,9 +195,9 @@ class Easy_migration
     private function getTableAttributes($object)
     {
         return [
-            'ENGINE' => $object->storageEngine,
-            'CHARACTER SET' => $object->charset,
-            'COLLATE' => $object->collation,
+            'ENGINE' => $object->getStorageEngine(),
+            'CHARACTER SET' => $object->getCharset(),
+            'COLLATE' => $object->getCollation(),
         ];
     }
 }
