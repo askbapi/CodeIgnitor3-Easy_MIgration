@@ -16,7 +16,7 @@ class Easy_table
     private $currentField;
     private $dbforge;
 
-    public function __construct()
+    protected function __construct()
     {
         $ciObject =& get_instance();
         $ciObject->load->dbforge();
@@ -25,14 +25,16 @@ class Easy_table
         $this->currentField = '';
     }
 
-    abstract public function fields();
+    protected function fields(){
+        
+    }
 
     /**
      * @param string $fieldName
      * @param int $size
      * @return $this
      */
-    public function increments($fieldName='', $size=10)
+    protected function increments($fieldName='', $size=10)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -51,7 +53,7 @@ class Easy_table
      * @param bool $unsigned
      * @return $this
      */
-    public function integer($fieldName='', $size=10, $default='', $unsigned=true)
+    protected function integer($fieldName='', $size=10, $default='', $unsigned=true)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -72,7 +74,7 @@ class Easy_table
      * @param bool $unsigned
      * @return $this
      */
-    public function decimal($fieldName='', $size=0, $scale=0, $default=0, $unsigned=true)
+    protected function decimal($fieldName='', $size=0, $scale=0, $default=0, $unsigned=true)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -93,7 +95,7 @@ class Easy_table
      * @param bool $unsigned
      * @return $this
      */
-    public function float($fieldName='', $size=0, $scale=0, $default=0, $unsigned=true)
+    protected function float($fieldName='', $size=0, $scale=0, $default=0, $unsigned=true)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -111,7 +113,7 @@ class Easy_table
      * @param bool $default
      * @return $this
      */
-    public function boolean($fieldName='', $default=false)
+    protected function boolean($fieldName='', $default=false)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -129,7 +131,7 @@ class Easy_table
      * @param bool $default
      * @return $this
      */
-    public function char($fieldName='', $size=0, $default=false)
+    protected function char($fieldName='', $size=0, $default=false)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -144,7 +146,7 @@ class Easy_table
      * @param string $fieldName
      * @return $this
      */
-    public function text($fieldName='')
+    protected function text($fieldName='')
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -158,7 +160,7 @@ class Easy_table
      * @param bool $default
      * @return $this
      */
-    public function date($fieldName='', $default=false)
+    protected function date($fieldName='', $default=false)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -173,7 +175,7 @@ class Easy_table
      * @param bool $default
      * @return $this
      */
-    public function dateTime($fieldName='', $default=false)
+    protected function dateTime($fieldName='', $default=false)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
@@ -186,7 +188,7 @@ class Easy_table
     /**
      * @return $this
      */
-    public function primary()
+    protected function primary()
     {
         $this->dbforge->add_key($this->currentField, true);
         return $this;
@@ -195,7 +197,7 @@ class Easy_table
     /**
      * @return $this
      */
-    public function index()
+    protected function index()
     {
         $this->dbforge->add_key($this->currentField);
         return $this;
@@ -204,7 +206,7 @@ class Easy_table
     /**
      * @return $this
      */
-    public function unique()
+    protected function unique()
     {
         array_push($this->fields[$this->currentField], [
             'unique' => true
@@ -216,7 +218,7 @@ class Easy_table
     /**
      * @return $this
      */
-    public function null()
+    protected function null()
     {
         array_push($this->fields[$this->currentField], [
             'null' => true
@@ -229,7 +231,7 @@ class Easy_table
      * @param string $storageEngine
      * @return $this
      */
-    public function setStorageEngine($storageEngine)
+    protected function setStorageEngine($storageEngine)
     {
         $this->storageEngine = $storageEngine;
         return $this;
@@ -239,7 +241,7 @@ class Easy_table
      * @param string $charset
      * @return $this
      */
-    public function setCharset($charset)
+    protected function setCharset($charset)
     {
         $this->charset = $charset;
         return $this;
@@ -249,7 +251,7 @@ class Easy_table
      * @param string $collation
      * @return $this
      */
-    public function setCollation($collation)
+    protected function setCollation($collation)
     {
         $this->collation = $collation;
         return $this;
@@ -258,7 +260,7 @@ class Easy_table
     /**
      * @return string
      */
-    public function getStorageEngine()
+    protected function getStorageEngine()
     {
         return $this->storageEngine;
     }
@@ -266,7 +268,7 @@ class Easy_table
     /**
      * @return string
      */
-    public function getCharset()
+    protected function getCharset()
     {
         return $this->charset;
     }
@@ -274,10 +276,19 @@ class Easy_table
     /**
      * @return string
      */
-    public function getCollation()
+    protected function getCollation()
     {
         return $this->collation;
     }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
 
 
 }
