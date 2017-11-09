@@ -1,9 +1,14 @@
 # CodeIgnitor3-Easy_Migration
 CodeIgnitor 3 library that makes migration easy and efficient.
 
-## Requirement
+It only support MYSQL database on current version.
 
-## Installation
+## Requirement
++ CodeIgnitor version 3
++ PHP 5.6+
++ MYSQL 5.6+
+
+## Installation and Preparedness
 + Download and drag the Migrationfields.php file into your application/libraries directory.
 + Create a writable sub-directory of **migrations** called **json**.
 
@@ -37,7 +42,7 @@ class Person extends Easy_table
 ```
 A file in migration directory should have single class with two required method know as **constructor** and **fields**. 
 
-The file should manually include **Easy_table.php" file on top. The class should extend Easy_table class as shown in above example.
+The file should manually include **Easy_table.php** file on top. The class should extend Easy_table class as shown in above example.
 
 File name and class name should start with capital letter. Example **Person.php** should have **class Person**
 
