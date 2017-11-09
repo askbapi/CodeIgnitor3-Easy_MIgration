@@ -16,9 +16,24 @@ class Easy_migration
 
     }
 
-    // $Version = 0 equal to latest version
-    public function migrate($version=0, $tableName='')
+
+    /**
+     * Run migration with the help of fiels in migrations directory
+     * @param string $tableName - run migration only for specified table
+     * @param int $version  - 0 equal to latest version
+     */
+    public function migrate($tableName='', $version=0)
     {
+
+
+
+    }
+
+
+    /**
+     * Run when migration run for Latest file
+     */
+    private function runForLatest(){
         // Load all files and class from Migration directory
         $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.'));
         foreach ($classFiles as $className){
@@ -54,7 +69,7 @@ class Easy_migration
      * @param array $fields
      * @param string $className
      */
-    public function createJsonFile(array $fields, $className='')
+    private function createJsonFile(array $fields, $className='')
     {
         // Search for last File
         $jsonFiles = array_diff(
