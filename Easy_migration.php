@@ -24,8 +24,8 @@ class Easy_migration
         foreach ($classFiles as $className){
             # Load Class
             include_once self::BASEPATH.$className.'.php';
-            $objjectClassName = ucfirst($className);
-            $object = new $objjectClassName;
+            $objectClassName = ucfirst($className);
+            $object = new $objectClassName;
 
             # Execute the fields method
             $object->fields();
@@ -34,12 +34,18 @@ class Easy_migration
             $fields = $object->getFields();
 
             # Create JSON file under migrate directory with incremental value
+            $this->createJsonFile($fields, $objectClassName);
 
-            # Get class name as Table name
-            # Create Table
+            # Get class name as Table name & Create Table
+            $this->dbforge->add_field($fields);
 
+            $tableAttributes = [
+                'ENGINE' => $object->storageEngine,
+                'CHARACTER SET' => $object->charset,
+                'COLLATE' => $object->collation,
+            ];
+            $this->dbforge->create_table($this->tableName, true, $tableAttributes);
         }
-
     }
 
 
