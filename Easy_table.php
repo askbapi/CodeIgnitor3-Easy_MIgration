@@ -50,7 +50,7 @@ class Easy_table
     /**
      * @param string $fieldName
      * @param int $size
-     * @param string $default
+     * @param int $default
      * @param bool $unsigned
      * @return $this
      */
@@ -61,9 +61,8 @@ class Easy_table
             'type' => 'INT',
             'constraint' => $size,
             'unsigned' => $unsigned,
-            'default' => $default,
-
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -82,9 +81,8 @@ class Easy_table
             'type' => 'DECIMAL',
             'constraint' => "$size, $scale",
             'unsigned' => $unsigned,
-            'default' => $default,
-
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -102,9 +100,8 @@ class Easy_table
             'type' => 'DECIMAL',
             'constraint' => "$size, $scale",
             'unsigned' => true,
-            'default' => $default,
-
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -123,9 +120,8 @@ class Easy_table
             'type' => 'FLOAT',
             'constraint' => "$size, $scale",
             'unsigned' => $unsigned,
-            'default' => $default,
-
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -141,8 +137,8 @@ class Easy_table
             'type' => 'INT',
             'constraint' => 1,
             'unsigned' => true,
-            'default' => $default,
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -158,8 +154,8 @@ class Easy_table
         $this->fields[$fieldName] = [
             'type' => 'VARCHAR',
             'constraint' => $size,
-            'default' => $default,
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -186,8 +182,8 @@ class Easy_table
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
             'type' => 'DATE',
-            'default' => $default,
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -201,8 +197,8 @@ class Easy_table
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
             'type' => 'DATETIME',
-            'default' => $default,
         ];
+        $this->setDefault($default);
         return $this;
     }
 
@@ -224,8 +220,8 @@ class Easy_table
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
             'type' => $type,
-            'default' => $default,
         ];
+        $this->setDefault($default);
         return $this;
     }
     /**
@@ -362,5 +358,20 @@ class Easy_table
     public function getFields()
     {
         return $this->fields;
+    }
+
+
+    /**
+     * @param string $default
+     * @return $this
+     */
+    private function setDefault($default=''){
+        if(!$default){
+            array_push($this->fields[$this->currentField], [
+                'default' => $default
+            ]);
+        }
+
+        return $this;
     }
 }
