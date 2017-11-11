@@ -149,10 +149,10 @@ class Easy_table
     /**
      * @param string $fieldName
      * @param int $size
-     * @param bool $default
+     * @param string $default
      * @return $this
      */
-    protected function char($fieldName='', $size=255, $default=false)
+    protected function char($fieldName='', $size=255, $default='')
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
