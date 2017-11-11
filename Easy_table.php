@@ -50,11 +50,11 @@ class Easy_table
     /**
      * @param string $fieldName
      * @param int $size
-     * @param string $default
+     * @param int $default
      * @param bool $unsigned
      * @return $this
      */
-    protected function integer($fieldName='', $size=10, $default='', $unsigned=true)
+    protected function integer($fieldName='', $size=10, $default=0, $unsigned=true)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
