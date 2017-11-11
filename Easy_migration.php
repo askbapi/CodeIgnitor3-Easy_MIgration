@@ -100,7 +100,7 @@ class Easy_migration
      */
     private function runForLatest(){
         // Load all files and class from Migration directory
-        $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.', 'json'));
+        $classFiles = array_diff(scandir(self::BASEPATH, 1), array('..', '.','json'));
         foreach ($classFiles as $className){
             // Load Class
             require(self::BASEPATH.$className);
@@ -113,7 +113,7 @@ class Easy_migration
 
             // Collect fields in array format
             $fields = $object->getFields();
-
+   
             // Collect table attributes
             $tableAttributes = $this->getTableAttributes($object);
 
@@ -198,6 +198,7 @@ class Easy_migration
             'ENGINE' => $object->getStorageEngine(),
             'CHARACTER SET' => $object->getCharset(),
             'COLLATE' => $object->getCollation(),
+            'COMMENT' => $object->getComment(),
         ];
     }
 }
