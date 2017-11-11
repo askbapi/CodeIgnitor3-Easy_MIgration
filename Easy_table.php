@@ -206,6 +206,28 @@ class Easy_table
     }
 
     /**
+     * It is  ENUM data type
+     * @param string $fieldName
+     * @param array $choice
+     * @param string $default
+     * @return $this
+     */
+    protected function choice($fieldName='', array $choice, $default='')
+    {
+        $type = "ENUM(";
+        foreach ($choice as $val){
+            $type .= "'".$val."', ";
+        }
+        $type = rtrim($type, ',');
+        $type .= ")";
+        $this->currentField = $fieldName;
+        $this->fields[$fieldName] = [
+            'type' => $type,
+            'default' => $default,
+        ];
+        return $this;
+    }
+    /**
      * @return $this
      */
     protected function primary()
