@@ -113,7 +113,7 @@ class Easy_migration
 
             // Collect fields in array format
             $fields = $object->getFields();
-   
+
             // Collect table attributes
             $tableAttributes = $this->getTableAttributes($object);
 
@@ -194,11 +194,14 @@ class Easy_migration
      */
     private function getTableAttributes($object)
     {
-        return [
+        $return = [
             'ENGINE' => $object->getStorageEngine(),
             'CHARACTER SET' => $object->getCharset(),
             'COLLATE' => $object->getCollation(),
-            'COMMENT' => $object->getComment(),
         ];
+        if(!empty($object->getComment())){
+            $return['COMMENT'] = $object->getComment();
+        }
+        return $return;
     }
 }
