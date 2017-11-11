@@ -274,9 +274,7 @@ class Easy_table
      */
     protected function comment($comment=''){
         if(!$comment){
-            array_push($this->fields[$this->currentField], [
-                'comment' => $comment
-            ]);
+            $this->fields[$this->currentField]['comment'] = $default;
         }
 
         return $this;
