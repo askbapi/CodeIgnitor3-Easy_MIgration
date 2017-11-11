@@ -26,7 +26,7 @@ class Easy_table
     }
 
     protected function fields(){
-        
+
     }
 
     /**
@@ -92,6 +92,26 @@ class Easy_table
      * @param int $size
      * @param int $scale
      * @param int $default
+     * @return $this
+     */
+    protected function money($fieldName='', $size=10, $scale=2, $default=0)
+    {
+        $this->currentField = $fieldName;
+        $this->fields[$fieldName] = [
+            'type' => 'DECIMAL',
+            'constraint' => "$size, $scale",
+            'unsigned' => true,
+            'default' => $default,
+
+        ];
+        return $this;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param int $size
+     * @param int $scale
+     * @param int $default
      * @param bool $unsigned
      * @return $this
      */
@@ -131,7 +151,7 @@ class Easy_table
      * @param bool $default
      * @return $this
      */
-    protected function char($fieldName='', $size=0, $default=false)
+    protected function char($fieldName='', $size=255, $default=false)
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
