@@ -367,9 +367,7 @@ class Easy_table
      */
     private function setDefault($default=''){
         if(!$default){
-            array_push($this->fields[$this->currentField], [
-                'default' => $default
-            ]);
+            $this->fields[$this->currentField]['default'] = $default;
         }
 
         return $this;
