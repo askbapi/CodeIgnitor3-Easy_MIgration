@@ -9,9 +9,10 @@
 
 class Easy_table
 {
-    private $storageEngine='InnoDB';
-    private $charset='utf8';
-    private $collation='utf8_unicode_ci';
+    private $storageEngine = 'InnoDB';
+    private $charset = 'utf8';
+    private $collation = 'utf8_unicode_ci';
+    private $comment = '';
     private $fields = [];
     private $currentField;
     private $dbforge;
@@ -269,6 +270,16 @@ class Easy_table
         return $this;
     }
 
+    protected function comment($comment=''){
+        if(!$comment){
+            array_push($this->fields[$this->currentField], [
+                'comment' => $comment
+            ]);
+        }
+
+        return $this;
+    }
+
     /**
      * @param string $storageEngine
      * @return $this
@@ -321,6 +332,22 @@ class Easy_table
     public function getCollation()
     {
         return $this->collation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
     }
 
     /**
