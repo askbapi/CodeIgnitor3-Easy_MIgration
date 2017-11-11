@@ -50,7 +50,7 @@ class Easy_table
     /**
      * @param string $fieldName
      * @param int $size
-     * @param int $default
+     * @param string $default
      * @param bool $unsigned
      * @return $this
      */
@@ -217,7 +217,7 @@ class Easy_table
     {
         $type = "ENUM(";
         foreach ($choice as $val){
-            $type .= "'".$val."', ";
+            $type .= "'".$val."',";
         }
         $type = rtrim($type, ',');
         $type .= ")";
@@ -228,7 +228,6 @@ class Easy_table
         ];
         return $this;
     }
-
     /**
      * @return $this
      */
@@ -270,6 +269,7 @@ class Easy_table
 
         return $this;
     }
+
 
     /**
      * Add comment to column
