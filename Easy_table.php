@@ -270,7 +270,7 @@ class Easy_table
      * @return $this
      */
     protected function comment($comment=''){
-        if(!$comment){
+        if(!empty($comment)){
             $this->fields[$this->currentField]['comment'] = $comment;
         }
         return $this;
@@ -360,7 +360,7 @@ class Easy_table
      * @return $this
      */
     private function setDefault($default=''){
-        if(!$default){
+        if(!empty($default)){
             $this->fields[$this->currentField]['default'] = $default;
         }
 
