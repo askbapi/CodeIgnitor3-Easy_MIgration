@@ -138,11 +138,15 @@ class Easy_migration
      */
     private function migrateTable($tableName='', $tableAttributes='', $fields)
     {
-        $this->ciObject->dbforge->drop_table($tableName,TRUE);
+        $this->ciObject->dbforge->drop_table($tableName, true);
         // @TODO - make it more versatile to handle add, delete column
 
         $this->ciObject->dbforge->add_field($fields);
-        $this->ciObject->dbforge->create_table(strtolower($tableName), true, $tableAttributes);
+        $this->ciObject->dbforge->create_table(
+            strtolower($tableName),
+            true,
+            $tableAttributes
+        );
     }
 
     /**
@@ -200,7 +204,7 @@ class Easy_migration
             'COLLATE' => $object->getCollation(),
         ];
         if(!empty($object->getComment())){
-            $return['COMMENT'] = $object->getComment();
+            $return['COMMENT'] = "'".$object->getComment()."'";
         }
         return $return;
     }
