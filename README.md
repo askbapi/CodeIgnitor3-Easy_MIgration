@@ -26,6 +26,8 @@ class Person extends Easy_table
     public function __construct()
     {
         parent::__construct();
+        
+        $this->setComment('This is table comment');
     }
 
     public function fields()
@@ -34,6 +36,11 @@ class Person extends Easy_table
             ->char('first_name', 100)
             ->char('middle_name', 100)->null()
             ->char('email', 100)->unique()
+            ->choice('gender', [
+                            'Male',
+                            'Female',
+                            'Other'
+                        ])
             ->integer('age', 3, 0)
             ->decimal('assert', 8,2)
             ->date('dob')->index();
@@ -125,6 +132,18 @@ Allow the field to have null value
 
 ***Return*** 
 + Doesn't return anything
+
+### comment
+Add comment to column
+
+***Parameters*** 
++ string $comment - comment for column
+
+***Return*** 
++ Doesn't return anything
+```php
+char('gender')->comment('Mention the sex of the person')
+```
 
 ### increments
 It is a field that is unsigned interger having constraint of 10. It is generally used for primary key with AUTO_INCREMENT.
@@ -224,6 +243,25 @@ Make field datetime
 ***Return*** 
 + Doesn't return anything
 
+### choice
+It is  ENUM data type
+
+***Parameters*** 
++ string $fieldName - Name of the field
++ array $choice - Choice is array
++ string $default - default value to select from choice array
+
+***Return*** 
++ Doesn't return anything
+
+```PHP
+->choice('gender', [
+                'Male',
+                'Female',
+                'Other'
+            ])
+```
+
 ### setTableName
 Take a table name
 
@@ -256,6 +294,15 @@ Set collation for the table
 
 ***Parameters*** 
 + string $collation - By default set to **utf8_unicode_ci**
+
+***Return*** 
++ Doesn't return anything
+
+### setComment
+Set collation for the table
+
+***Parameters*** 
++ string $comment - Comment for table
 
 ***Return*** 
 + Doesn't return anything

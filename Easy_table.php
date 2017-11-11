@@ -228,6 +228,7 @@ class Easy_table
         ];
         return $this;
     }
+
     /**
      * @return $this
      */
@@ -270,6 +271,11 @@ class Easy_table
         return $this;
     }
 
+    /**
+     * Add comment to column
+     * @param string $comment
+     * @return $this
+     */
     protected function comment($comment=''){
         if(!$comment){
             array_push($this->fields[$this->currentField], [
