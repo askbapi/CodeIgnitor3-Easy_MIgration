@@ -259,10 +259,7 @@ class Easy_table
      */
     protected function null()
     {
-        array_push($this->fields[$this->currentField], [
-            'null' => true
-        ]);
-
+        $this->fields[$this->currentField]['null'] = true;
         return $this;
     }
 
@@ -274,9 +271,8 @@ class Easy_table
      */
     protected function comment($comment=''){
         if(!$comment){
-            $this->fields[$this->currentField]['comment'] = $default;
+            $this->fields[$this->currentField]['comment'] = $comment;
         }
-
         return $this;
     }
 
