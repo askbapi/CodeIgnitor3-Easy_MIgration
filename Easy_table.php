@@ -167,7 +167,7 @@ class Easy_table
     {
         $this->currentField = $fieldName;
         $this->fields[$fieldName] = [
-            'type' => 'TXT',
+            'type' => 'TEXT',
         ];
         return $this;
     }
